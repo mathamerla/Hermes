@@ -9,7 +9,7 @@ public sealed class RecoverySyncService(
     public async Task<int> RunAsync(int days, CancellationToken ct)
     {
         var existing = await sheets.GetRowsAsync(ct);
-        var today = DateOnly.FromDateTime(clock.GetUtcNow().ToOffset(TimeSpan.FromHours(1)).DateTime);
+        var today = DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(clock.GetUtcNow(), TimeZoneInfo.FindSystemTimeZoneById("Europe/Warsaw")).DateTime);
         var count = 0;
         // Yesterday is the newest complete day; avoid partial today's sleep/HRV.
         for (var daysAgo = days; daysAgo >= 1; daysAgo--)
