@@ -31,4 +31,4 @@ jobs:
       - name: Run Garmin client
         env:
           GARMIN_API_KEY: ${{ secrets.GARMIN_API_KEY }}
-        run: dotnet run --project Hermes/Hermes.csproj
+        run: dotnet run --project Hermes.csproj
