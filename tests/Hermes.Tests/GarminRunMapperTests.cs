@@ -1,3 +1,4 @@
+using Xunit;
 using System.Text.Json;
 using Hermes.Garmin;
 using Hermes.Storage;
