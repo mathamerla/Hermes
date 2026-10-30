@@ -41,5 +41,5 @@ jobs:
           GARMIN_API_KEY: ${{ secrets.GARMIN_API_KEY }}
         run: >
           dotnet run
-          --project TrainingSync/TrainingSync.csproj
+          --project Hermes.csproj
           --configuration Release
