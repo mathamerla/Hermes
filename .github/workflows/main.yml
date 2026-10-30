@@ -1,0 +1,34 @@
+
+name: Garmin Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 5 * * *"
+      timezone: "Europe/Warsaw"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: garmin-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Run Garmin client
+        env:
+          GARMIN_API_KEY: ${{ secrets.GARMIN_API_KEY }}
+        run: dotnet run --project Hermes/Hermes.csproj
