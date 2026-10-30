@@ -27,3 +27,10 @@ var service = new ActivitySyncService(new GarminClient(http, key),
 var fullSync = args.Contains("--full-sync", StringComparer.OrdinalIgnoreCase);
 var result = await service.RunAsync(fullSync, CancellationToken.None);
 Console.WriteLine($"Garmin sync OK: scanned={result.Scanned}, inserted={result.Inserted}, updated={result.Updated}, mode={(fullSync ? "full" : "14d")}.");
+
+var recoveryDays = args.Contains("--recovery-backfill", StringComparer.OrdinalIgnoreCase) ? 30 : 7;
+var recovery = new RecoverySyncService(
+    new GarminRecoveryClient(http, key),
+    new GoogleRecoveryRepository(sheetsClient, spreadsheetId), TimeProvider.System);
+var importedDays = await recovery.RunAsync(recoveryDays, CancellationToken.None);
+Console.WriteLine($"Garmin recovery sync OK: days={importedDays}.");
